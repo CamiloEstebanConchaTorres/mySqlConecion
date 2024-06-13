@@ -21,3 +21,37 @@ export const getAllJobTitle = async({cargo} = {cargo: "Sales Rep"})=>{
     result["count"] = result.length;
     return result;
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//2. Lista de empleados que trabajan en una oficina específica (por ejemplo, '1')
+
+export const getEmployeesByOfficeCode = async (officeCode) => {
+    const [result] = await connection.query(
+        `SELECT firstName, lastName FROM employees WHERE officeCode = 1`, 
+        [officeCode]
+    );
+    return result;
+}
+
+// 7. Lista de todos los empleados con su jefe (si tienen):
+
+export const getEmployeesWithReportsTo = async () => {
+    const [result] = await connection.query(
+        'SELECT employeeNumber, firstName, lastName, reportsTo FROM employees WHERE reportsTo IS NOT NULL ORDER BY firstName'
+    );
+    return result;
+}
+
+////////////////////////////////////////// MULTITABLA //////////////////////////////////
+//2. Listar todos los empleados junto con la oficina en la que trabajan:
+
+export const getEmployeesWithOffices = async () => {
+    const query = `
+        SELECT * 
+        FROM employees e
+        INNER JOIN offices o ON e.officeCode = o.officeCode
+    `;
+    const [result] = await connection.query(query);
+    return result;
+}

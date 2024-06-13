@@ -133,15 +133,15 @@
     od.quantityOrdered,
     od.priceEach,
     (od.quantityOrdered * od.priceEach) AS totalPrice
-FROM 
+    FROM 
     orders o
-INNER JOIN 
+    INNER JOIN 
     customers c ON o.customerNumber = c.customerNumber
-INNER JOIN 
+    INNER JOIN 
     orderdetails od ON o.orderNumber = od.orderNumber
-INNER JOIN 
+    INNER JOIN 
     products p ON od.productCode = p.productCode
-ORDER BY 
+    ORDER BY 
     o.orderNumber;
 
    ```
@@ -159,13 +159,13 @@ ORDER BY
     e.firstName AS salesRepFirstName,
     e.lastName AS salesRepLastName,
     e.email AS salesRepEmail
-FROM 
+    FROM 
     payments p
-INNER JOIN 
+    INNER JOIN 
     customers c ON p.customerNumber = c.customerNumber
-INNER JOIN 
+    INNER JOIN 
     employees e ON c.salesRepEmployeeNumber = e.employeeNumber
-ORDER BY 
+    ORDER BY 
     p.paymentDate;
 
    ```
@@ -178,17 +178,17 @@ ORDER BY
     p.productName,
     pl.productLine,
     SUM(od.quantityOrdered) AS totalQuantityOrdered
-FROM 
+    FROM 
     products p
-INNER JOIN 
+    INNER JOIN 
     productlines pl ON p.productLine = pl.productLine
-INNER JOIN 
+    INNER JOIN 
     orderdetails od ON p.productCode = od.productCode
-GROUP BY 
+    GROUP BY 
     p.productCode,
     p.productName,
     pl.productLine
-ORDER BY 
+    ORDER BY 
     p.productCode;
 
    ```
@@ -213,13 +213,13 @@ ORDER BY
     c.country,
     e.firstName AS salesRepFirstName,
     e.lastName AS salesRepLastName
-FROM 
+    FROM 
     orders o
-INNER JOIN 
+    INNER JOIN 
     customers c ON o.customerNumber = c.customerNumber
-INNER JOIN 
+    INNER JOIN 
     employees e ON c.salesRepEmployeeNumber = e.employeeNumber
-ORDER BY 
+    ORDER BY 
     o.orderNumber;
 
    ```
@@ -233,18 +233,18 @@ ORDER BY
     e.firstName AS salesRepFirstName,
     e.lastName AS salesRepLastName,
     SUM(p.amount) AS totalPayments
-FROM 
+    FROM 
     customers c
-INNER JOIN 
+    INNER JOIN 
     payments p ON c.customerNumber = p.customerNumber
-INNER JOIN 
+    INNER JOIN 
     employees e ON c.salesRepEmployeeNumber = e.employeeNumber
-GROUP BY 
+    GROUP BY 
     c.customerNumber,
     c.customerName,
     e.firstName,
     e.lastName
-ORDER BY 
+    ORDER BY 
     totalPayments DESC;
 
    ```
